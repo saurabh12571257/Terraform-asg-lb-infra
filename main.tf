@@ -9,15 +9,15 @@ resource aws_default_vpc default {
   }
 }
 
-resource aws_instance my_instance {
+resource "aws_instance" "my_instance" {
   for_each = tomap({
     "first_instance" = "t2.micro"
     "second_instance" = "t3.micro"
   })
-  
+
   ami           = var.ami
   instance_type = each.value
-  security_groups = [aws_security_group.my_instance_sg]
+  security_groups = [aws_security_group.my_instance_sg.name]
   key_name      = aws_key_pair.ec2_key.key_name
 
   root_block_device {
@@ -31,7 +31,7 @@ resource aws_instance my_instance {
   }
 }
 
-resource aws_security_group my_instance_sg {
+resource "aws_security_group" "my_instance_sg" {
     name   = "my_instance_sg"
     vpc_id = aws_default_vpc.default.id
 
