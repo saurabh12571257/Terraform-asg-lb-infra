@@ -77,12 +77,11 @@ resource "aws_security_group" "ec2_sg" {
     description     = "Allow ALB to reach instances on HTTP"
   }
 
-  # Restrict SSH to your IP (replace with var.my_ip or set a CIDR variable)
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.my_ip_cidr]
+    cidr_blocks = ["0.0.0.0/0"]
     description = "SSH from admin"
   }
 
